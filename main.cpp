@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
+#include <iterator>
 using namespace std;
 
 //Create a function that takes two list of numbers and returns a new list that only consists those
@@ -45,6 +45,16 @@ vector<int> subtract_list_two_from_list_one(vector<int> l_one, vector<int> l_two
   return subtracted_vector;
 }
 
+vector<int> subtract_version_two(vector<int> l_one, vector<int> l_two) {
+  vector<int> subtracted_vector;
+  sort_vector(l_one);
+  sort_vector(l_two);
+  set_difference(l_one.begin(), l_one.end(),
+                 l_two.begin(), l_two.end(),
+                 back_inserter(subtracted_vector));
+  return subtracted_vector;
+}
+
 int main(int argc, char* argv[]) {
   vector<int> list_one;
   vector<int> list_two;
@@ -55,8 +65,8 @@ int main(int argc, char* argv[]) {
   cout << endl;
   print_vector(list_two);
 
-  subtracted = subtract_list_two_from_list_one(list_one, list_two);
-
+  //subtracted = subtract_list_two_from_list_one(list_one, list_two);
+  subtracted = subtract_version_two(list_one, list_two);
   cout << endl;
 
   print_vector(subtracted);
