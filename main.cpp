@@ -2,12 +2,48 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+
 using namespace std;
 
 //Create a function that takes two list of numbers and returns a new list that only consists those
 //numbers that are in the first array but not in the second
 
-void fill_vectors(vector<int> &vect_1, vector<int> &vect_2) {
+void fill_two_vector_with_integers(vector<int> &vect_1, vector<int> &vect_2);
+
+void print_vector_to_console(vector<int> vect);
+
+void sort_vector_elements(vector<int> &vect);
+
+vector<int> subtract_list_two_from_list_one(vector<int> l_one, vector<int> l_two);
+
+vector<int> subtract_version_two(vector<int> l_one, vector<int> l_two);
+
+int main(int argc, char* argv[]) {
+  vector<int> list_one;
+  vector<int> list_two;
+  vector<int> subtracted_one;
+  vector<int> subtracted_two;
+
+  fill_two_vector_with_integers(list_one, list_two);
+
+  print_vector_to_console(list_one);
+  
+  cout << endl;
+  print_vector_to_console(list_two);
+
+  subtracted_one = subtract_list_two_from_list_one(list_one, list_two);
+  subtracted_two = subtract_version_two(list_one, list_two);
+  
+  cout << endl;
+  print_vector_to_console(subtracted_one);
+  
+  cout << endl;
+  print_vector_to_console(subtracted_two);
+
+  return 0;
+}
+
+void fill_two_vector_with_integers(vector<int> &vect_1, vector<int> &vect_2) {
   for (int i = 0; i < 20; i++) {
     vect_1.push_back(i);
     if (i % 2 == 0) {
@@ -16,14 +52,14 @@ void fill_vectors(vector<int> &vect_1, vector<int> &vect_2) {
   }
 }
 
-void print_vector(vector<int> vect) {
+void print_vector_to_console(vector<int> vect) {
   for (int i = 0; i < vect.size(); i++) {
     cout << vect[i] << " ";
   }
 }
 
-void sort_vector(vector<int> &vect) {
-  sort(vect.begin(),vect.end());
+void sort_vector_elements(vector<int> &vect) {
+  sort(vect.begin(), vect.end());
 }
 
 vector<int> subtract_list_two_from_list_one(vector<int> l_one, vector<int> l_two) {
@@ -36,7 +72,7 @@ vector<int> subtract_list_two_from_list_one(vector<int> l_one, vector<int> l_two
       }
     }
     if (is_element_in_both_vector == false) {
-      subtracted_vector.push_back(i);
+      subtracted_vector.push_back(l_one[i]);
     }
     else {
       is_element_in_both_vector = false;
@@ -47,29 +83,10 @@ vector<int> subtract_list_two_from_list_one(vector<int> l_one, vector<int> l_two
 
 vector<int> subtract_version_two(vector<int> l_one, vector<int> l_two) {
   vector<int> subtracted_vector;
-  sort_vector(l_one);
-  sort_vector(l_two);
+  sort_vector_elements(l_one);
+  sort_vector_elements(l_two);
   set_difference(l_one.begin(), l_one.end(),
-                 l_two.begin(), l_two.end(),
-                 back_inserter(subtracted_vector));
+    l_two.begin(), l_two.end(),
+    back_inserter(subtracted_vector));
   return subtracted_vector;
-}
-
-int main(int argc, char* argv[]) {
-  vector<int> list_one;
-  vector<int> list_two;
-  vector<int> subtracted;
-  fill_vectors(list_one, list_two);
-
-  print_vector(list_one);
-  cout << endl;
-  print_vector(list_two);
-
-  //subtracted = subtract_list_two_from_list_one(list_one, list_two);
-  subtracted = subtract_version_two(list_one, list_two);
-  cout << endl;
-
-  print_vector(subtracted);
-
-  return 0;
 }
